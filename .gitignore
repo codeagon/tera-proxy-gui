@@ -5,4 +5,5 @@ bin/node_modules/*
 !bin/node_modules/command
 !bin/node_modules/swim-fix.js
 /node_modules
+package-lock.json
 release

@@ -51,5 +51,12 @@ module.exports = {
 		pathname: ["/servers/list.uk", "/servers/list.de", "/servers/list.fr"],
 		customServers: require("./res/servers-eu-test.json"),
 		listenHostname: "127.0.0.16"
+	},
+	"KR-TEST": {
+		url: "http://tera.nexon.com/launcherOpenTest/sls/servers/list.xml",
+		hostname: "tera.nexon.com",
+		port: 80,
+		customServers: require('./res/servers-kr-test.json'),
+		listenHostname: "127.0.0.17"
 	}
 }

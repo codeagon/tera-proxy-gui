@@ -8,9 +8,9 @@ Download the current "stable" version from the [releases tab](https://github.com
 
 (Or download the last version from here `git clone https://github.com/Mathicha/tera-proxy-gui`)
 
-Run `npm i` in a command prompt for install dependencies.
+Run 'install.bat' for install dependencies.
 
-Now start it with 'run.bat'.
+Now start it with 'run.bat' (as admin).
 
 ## Note
 Feel free to contribute 😇
