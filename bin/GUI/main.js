@@ -10,7 +10,7 @@ let config = null
 try {
 	config = require('../config.json')
 } catch (e) {
-	config = { "region": "EU", "autostart": false }
+	config = { "region": "EU", "autostart": false, "ui": "black" }
 }
 
 function setconfig() {

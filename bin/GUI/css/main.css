@@ -15,9 +15,6 @@ html {
 
 body {
 	-webkit-app-region: drag;
-	background-color: #292F33;
-	color: #bbb;
-	/* font-family: Helvetica,Arial,sans-serif; */
 	font-family: roboto;
 	font-size: 14px;
 	line-height: 1.42857143;
@@ -35,14 +32,11 @@ body {
  *************/
 
 #title-bar {
-	background-color: #292F33;
 	position: fixed;
 	height: 32px;
 	top: 0px;
 	left: 0px;
-	right: 0px;
-	border-radius: 16px;
-	font-family: sans-serif
+	right: 0px
 }
 
 #title {
@@ -74,7 +68,6 @@ body {
 	height: 32px;
 	width: 32px;
 	border: none;
-	color: #bbb;
 	background-color: transparent
 }
 
@@ -95,8 +88,7 @@ ul.tabs {
 	margin-right: 16px
 }
 
-ul.tabs li{
-	background-color: #292F33;
+ul.tabs li {
 	display: inline-block;
 	padding: 8px 16px;
 	border-radius: 8px 8px 0 0;
@@ -104,21 +96,16 @@ ul.tabs li{
 	user-select: none
 }
 
-ul.tabs li.current{
-	background: #222426
-}
-.tab-content{
+.tab-content {
 	display: none;
-	background: #14171A;
 	padding: 8px;
 	border-radius: 8px;
-	border: solid 4px #222426;
 	/* todo? edit width&height */
 	width: 984px;
 	height: 524px
 }
 
-.tab-content.current{
+.tab-content.current {
 	display: inherit
 }
 
@@ -129,7 +116,6 @@ ul.tabs li.current{
 #startproxy {
 	cursor: pointer;
 	user-select: none;
-	background: #222426;
 	border-radius: 8px 8px 0 0;
 	padding: 8px 16px;
 	float: right;
@@ -145,11 +131,10 @@ ul.tabs li.current{
 	font-size: 16px;
 	position: fixed;
 	top: 72px;
-	right: 12px; /* todo: add 24 with scrollbar*/
+	right: 12px; /* todo: add 24px with scrollbar*/
 	height: 32px;
 	width: 32px;
 	border: none;
-	color: #bbb;
 	background-color: transparent
 }
 
@@ -159,7 +144,8 @@ ul.tabs li.current{
 
 #logsgoeshere {
 	max-height: 500px;
-	overflow: auto
+	overflow: auto;
+	font-family: "Comic Sans MS", "Comic Sans"
 }
 
 /***********
@@ -167,7 +153,6 @@ ul.tabs li.current{
  ***********/
 
 ul.ModulesList li {
-	background-color: #222426;
 	display: inline-block;
 	padding: 4px 8px;
 	margin: 0px 4px 4px 0px;
@@ -193,22 +178,19 @@ ul.ModulesList li {
 }
 
 ::-webkit-scrollbar-track {
-	background: #292f33;
 	border-radius: 4px
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #222426;
 	border-radius: 4px
 }
 
-/*************
- * SCROLLBAR *
- *************/
+/**********
+ * CONFIG *
+ **********/
 
 
 #Config>div {
-	background-color: #222426;
 	padding: 4px 8px;
 	margin: 0px 4px 4px 0px;
 	border-radius: 4px

@@ -67,7 +67,8 @@ var contextMenu = Menu.buildFromTemplate([
 	{
 		label: 'Quit',
 		click: () => {
-			proxyisopen ? closeproxy() : app.exit()
+			proxyisopen ? closeproxy() : ''
+			app.exit()
 		}
 	}
 ])
