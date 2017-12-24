@@ -5,12 +5,15 @@ wow amazing
 
 ## How to use this shit ui ??
 Download the current "stable" version from the [releases tab](https://github.com/Mathicha/tera-proxy-gui/releases).
+Start it with 'run.bat' (as admin).
 
-(Or download the last version from here `git clone https://github.com/Mathicha/tera-proxy-gui`)
-
-Run 'install.bat' for install dependencies.
-
-Now start it with 'run.bat' (as admin).
+Or download the last version from here
+```
+git clone https://github.com/Mathicha/tera-proxy-gui
+cd tera-proxy-gui
+npm i
+npm start
+```
 
 ## Note
 Feel free to contribute 😇

@@ -1,6 +1,6 @@
 {
 	"name": "tera-proxy-gui",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"description": "Tera Proxy with nice gui",
 	"main": "main.js",
 	"author": "Mathi",
