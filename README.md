@@ -19,7 +19,7 @@ I have also included pinkie [default modules](https://github.com/pinkipi/tera-pr
 
 ## Todo
 - [x] Release
-- [ ] White/Pink ui
+- [x] Add White/Pink ui
 - [ ] Auto opcode update
 - [ ] Rebuild lib
 - [ ] ez api for other electron modules

@@ -204,3 +204,24 @@ ul.ModulesList li {
 	text-align: center;
 	margin-right: 8px
 }
+
+.theme {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin-right: 4px;
+	margin-bottom: -6px
+}
+
+.theme.black {
+	background-color: #292F33
+}
+
+.theme.white {
+	background-color: #e1e8ed
+}
+
+.theme.pink {
+	background-color: #F0438C
+}

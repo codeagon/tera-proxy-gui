@@ -156,4 +156,11 @@ jQuery(($) => {
 		remote.getCurrentWindow().minimize()
 	})
 
+	// change theme
+	$('div.theme').click(function () {
+		let theme = $(this).attr('class').split(' ').pop()
+		$('head>link').filter('[rel="stylesheet"]:last').remove()
+		$('head').append('<link rel="stylesheet" href="css/' + theme + '.css">')
+	})
+
 })
