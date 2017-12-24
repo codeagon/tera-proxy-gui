@@ -6,7 +6,7 @@ wow amazing
 ## How to use this shit ui ??
 Download the current "stable" version from the [releases tab](https://github.com/Mathicha/tera-proxy-gui/releases).
 
-Or download the last vertion from git `git clone https://github.com/Mathicha/tera-proxy-gui`.
+(Or download the last version from here `git clone https://github.com/Mathicha/tera-proxy-gui`)
 
 Run `npm i` in a command prompt for install dependencies.
 
@@ -19,7 +19,7 @@ I have also included pinkie [default modules](https://github.com/pinkipi/tera-pr
 
 ## Todo
 - [x] Release
-- [x] Add White/Pink ui
+- [x] Add theme change
 - [ ] Auto opcode update
 - [ ] Rebuild lib
 - [ ] ez api for other electron modules

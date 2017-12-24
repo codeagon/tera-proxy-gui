@@ -10,7 +10,7 @@ let config = null
 try {
 	config = require('../config.json')
 } catch (e) {
-	config = { "region": "EU", "autostart": false, "ui": "black" }
+	config = { "region": "EU", "autostart": false, "theme": "black" }
 }
 
 function setconfig() {
@@ -20,6 +20,7 @@ function setconfig() {
 		$('#autostart').prop('checked', true)
 		startproxy()
 	}
+	$('head').append('<link rel="stylesheet" href="css/' + config.theme + '.css">')
 }
 
 function saveconfig() {
@@ -159,6 +160,8 @@ jQuery(($) => {
 	// change theme
 	$('div.theme').click(function () {
 		let theme = $(this).attr('class').split(' ').pop()
+		config.theme = theme
+		saveconfig()
 		$('head>link').filter('[rel="stylesheet"]:last').remove()
 		$('head').append('<link rel="stylesheet" href="css/' + theme + '.css">')
 	})
