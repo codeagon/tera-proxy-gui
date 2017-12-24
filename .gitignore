@@ -1,0 +1,8 @@
+bin/config.json
+!bin/node_modules/
+bin/node_modules/*
+!bin/node_modules/chat-sanitizer.js
+!bin/node_modules/command
+!bin/node_modules/swim-fix.js
+/node_modules
+release

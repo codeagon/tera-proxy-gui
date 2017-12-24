@@ -1,0 +1,16 @@
+{
+	"name": "tera-proxy-gui",
+	"version": "0.0.1",
+	"description": "Tera Proxy with nice gui",
+	"main": "main.js",
+	"author": "Mathi",
+	"scripts": {
+		"start": "electron ."
+	},
+	"dependencies": {
+		"tera-data": "github:meishuu/tera-data",
+		"tera-proxy-game": "github:pinkipi/tera-proxy-game",
+		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls",
+		"electron": "^1.7.10"
+	}
+}

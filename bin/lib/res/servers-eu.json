@@ -1,0 +1,50 @@
+{
+	"26": {
+		"name": "(INT) - Killian (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9250,
+		"keepOriginal": true
+	},
+	"27": {
+		"name": "(EN) - Mystel (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9251,
+		"keepOriginal": true
+	},
+	"28": {
+		"name": "(DE) - Yurian (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9252,
+		"keepOriginal": true
+	},
+	"29": {
+		"name": "(FR) - Seren (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9253,
+		"keepOriginal": true
+	},
+	"30": {
+		"name": "(EN) - Sikander (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9254,
+		"keepOriginal": true
+	},
+	"31": {
+		"name": "(DE) - Saleron (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9255,
+		"keepOriginal": true
+	},
+	"32": {
+		"name": "(FR) - Amarun (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9256,
+		"keepOriginal": true
+	},
+	"33": {
+		"name": "(INT) - Manahan (Proxy)",
+		"ip": "127.0.0.21",
+		"port": 9257,
+		"keepOriginal": true
+	}
+}

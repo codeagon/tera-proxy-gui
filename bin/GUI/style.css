@@ -1,0 +1,224 @@
+/***********
+ * GENERAL *
+ ***********/
+ 
+html {
+	box-sizing: border-box;
+	height: 100%
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit
+}
+
+body {
+	-webkit-app-region: drag;
+	background-color: #292F33;
+	color: #bbb;
+	/* font-family: Helvetica,Arial,sans-serif; */
+	font-family: roboto;
+	font-size: 14px;
+	line-height: 1.42857143;
+	min-height: 100%;
+	overflow: hidden;
+	display: flex
+}
+
+.nodrag {
+	-webkit-app-region: no-drag
+}
+
+/*************
+ * TITLE BAR *
+ *************/
+
+#title-bar {
+	background-color: #292F33;
+	position: fixed;
+	height: 32px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	border-radius: 16px;
+	font-family: sans-serif
+}
+
+#title {
+	position: fixed;
+	left: 32px;
+	line-height: 32px
+}
+
+#title-status {
+	position: fixed;
+	top: 0px;
+	left: 45%;
+	line-height: 32px;
+	font-size: 12px
+}
+
+#title-icon {
+	position: fixed;
+	margin: 4px;
+	width: 24px;
+	height: 24px
+}
+
+#close-btn {
+	font-size: 16px;
+	position: fixed;
+	top: 0px;
+	right: 0px;
+	height: 32px;
+	width: 32px;
+	border: none;
+	color: #bbb;
+	background-color: transparent
+}
+
+#close-btn:hover {
+	color: #E81C4F
+}
+
+/********
+ * MAIN *
+ ********/
+
+.container {
+	margin: 32px 8px 8px 8px
+}
+
+ul.tabs {
+	margin-left: 16px;
+	margin-right: 16px
+}
+
+ul.tabs li{
+	background-color: #292F33;
+	display: inline-block;
+	padding: 8px 16px;
+	border-radius: 8px 8px 0 0;
+	cursor: pointer;
+	user-select: none
+}
+
+ul.tabs li.current{
+	background: #222426
+}
+.tab-content{
+	display: none;
+	background: #14171A;
+	padding: 8px;
+	border-radius: 8px;
+	border: solid 4px #222426;
+	/* todo? edit width&height */
+	width: 984px;
+	height: 524px
+}
+
+.tab-content.current{
+	display: inherit
+}
+
+/*********
+ * PROXY *
+ *********/
+
+#startproxy {
+	cursor: pointer;
+	user-select: none;
+	background: #222426;
+	border-radius: 8px 8px 0 0;
+	padding: 8px 16px;
+	float: right;
+	text-align: center;
+	width: 120px
+}
+
+/********
+ * LOGS *
+ ********/
+
+#clear-logs {
+	font-size: 16px;
+	position: fixed;
+	top: 72px;
+	right: 12px; /* todo: add 24 with scrollbar*/
+	height: 32px;
+	width: 32px;
+	border: none;
+	color: #bbb;
+	background-color: transparent
+}
+
+#clear-logs:hover {
+	color: #E81C4F
+}
+
+#logsgoeshere {
+	max-height: 500px;
+	overflow: auto
+}
+
+/***********
+ * MODULES *
+ ***********/
+
+ul.ModulesList li {
+	background-color: #222426;
+	display: inline-block;
+	padding: 4px 8px;
+	margin: 0px 4px 4px 0px;
+	border-radius: 4px;
+	cursor: pointer;
+	user-select: none
+}
+
+.module.disable {
+	box-shadow: 0 0 10px 1px #E81C4F inset
+}
+
+.module.enable {
+	box-shadow: 0 0 10px 1px #19CF86 inset
+}
+
+/*************
+ * SCROLLBAR *
+ *************/
+
+::-webkit-scrollbar {
+	width: 8px
+}
+
+::-webkit-scrollbar-track {
+	background: #292f33;
+	border-radius: 4px
+}
+
+::-webkit-scrollbar-thumb {
+	background: #222426;
+	border-radius: 4px
+}
+
+/*************
+ * SCROLLBAR *
+ *************/
+
+
+#Config>div {
+	background-color: #222426;
+	padding: 4px 8px;
+	margin: 0px 4px 4px 0px;
+	border-radius: 4px
+}
+
+#Config>div>a {
+	cursor: default;
+	user-select: none;
+	width: 64px;
+	display: inline-block;
+	text-align: center;
+	margin-right: 8px
+}

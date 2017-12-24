@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title>Tera Proxy (WIP)</title>
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
+	<link rel="stylesheet" href="style.css">
+	<script>window.$ = window.jQuery = require('./js/jquery-3.2.1.min.js')</script>
+	<script src="main.js"></script>
+</head>
+
+<body>
+
+	<div id="title-bar" class="title-bar">
+		<img src="icon.png" id="title-icon">
+		<div id="title">Tera Proxy (WIP)</div>
+		<div id="title-status">Proxy not running ¯\_(ツ)_/¯</div>
+		<button id="close-btn" class="nodrag">X</button>
+	</div>
+
+	<div class="container">
+
+		<ul class="tabs">
+
+			<li class="tab-link nodrag current" tabname="Logs">Logs</li>
+			<li class="tab-link nodrag" tabname="Config">Config</li>
+			<li class="tab-link nodrag" tabname="Modules">Modules</li>
+
+			<a class="nodrag" id="startproxy">Start Proxy</a>
+
+		</ul>
+
+		<div id="Logs" class="tab-content nodrag current">
+			<pre id=logsgoeshere></pre>
+			<button id="clear-logs">X</button>
+		</div>
+
+		<div id="Config" class="tab-content nodrag">
+			<div>
+				<a>Region</a>
+				<select id="regions">
+					<option>NA</option>
+					<option>EU</option>
+					<option>RU</option>
+					<option>KR</option>
+					<option>JP</option>
+					<option>TW</option>
+					<option>EU-TEST</option>
+				</select>
+			</div>
+			<div>
+				<a>Autostart</a>
+				<input id="autostart" type="checkbox">
+			</div>
+		</div>
+
+		<div id="Modules" class="tab-content nodrag">
+			<ul class="ModulesList">
+		</div>
+
+</body>
+
+</html>
