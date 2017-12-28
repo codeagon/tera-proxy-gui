@@ -1,9 +1,9 @@
 bin/config.json
 !bin/node_modules/
 bin/node_modules/*
-!bin/node_modules/chat-sanitizer.js
+!bin/node_modules/chat-sanitizer
 !bin/node_modules/command
-!bin/node_modules/swim-fix.js
+!bin/node_modules/swim-fix
 /node_modules
 package-lock.json
 release

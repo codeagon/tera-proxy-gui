@@ -49,6 +49,10 @@ app.on('ready', () => {
 	ipcMain.on('close proxy', () => {
 		closeproxy()
 	})
+
+	/* ipcMain.on('update my modules pls', () => {
+		updatemodules()
+	}) */
 })
 
 function runproxy(region) {
@@ -62,6 +66,10 @@ function closeproxy() {
 	spawn('taskkill', ['/pid', proxy.pid, '/f', '/t'])
 	proxyisopen = false
 }
+
+/* function updatemodules() {
+	let update = require('update')
+} */
 
 var contextMenu = Menu.buildFromTemplate([
 	{
