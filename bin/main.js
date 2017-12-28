@@ -3,7 +3,7 @@ const url = require('url')
 const { app, BrowserWindow, Tray, Menu, ipcMain } = require('electron')
 const { spawn } = require('child_process')
 
-const icon = path.join(__dirname, 'bin/GUI/icon.png')
+const icon = path.join(__dirname, 'www/icon.png')
 
 let ProxyWindow = null,
 	tray = null,
@@ -21,7 +21,7 @@ app.on('ready', () => {
 		resizable: false
 	})
 	ProxyWindow.loadURL(url.format({
-		pathname: path.join(__dirname, 'bin/GUI/index.html')
+		pathname: path.join(__dirname, 'www/index.html')
 	}))
 	ProxyWindow.on('minimize', () => {
 		ProxyWindow.hide()
@@ -53,7 +53,7 @@ app.on('ready', () => {
 
 function runproxy(region) {
 	if (proxyisopen) return
-	proxy = spawn('node', [path.join(__dirname, './bin/lib/proxy.js'), region])
+	proxy = spawn('node', [path.join(__dirname, './lib/proxy.js'), region])
 	proxyisopen = true
 }
 
