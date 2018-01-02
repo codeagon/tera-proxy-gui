@@ -93,6 +93,9 @@ function createServ(target, socket) {
 
 	populateModulesList()
 
+	// temp fix, pls caali fix ur tera data boi
+	try { fs.readdirSync(path.join(__dirname, "..", "..", "node_modules", "tera-data", "map")) }
+	catch (e) { fs.mkdirSync(path.join(__dirname, "..", "..", "node_modules", "tera-data", "map")) }
 
 	autoUpdate(moduleBase, modules).then((updateResult) => {
 		if (!updateResult["tera-data"])
