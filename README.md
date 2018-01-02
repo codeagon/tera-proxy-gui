@@ -27,7 +27,7 @@ I dont have a lot of time to maintain this shit gui, If you want to help i can p
 ## Todo
 - [x] Release
 - [x] Add theme change
-- [ ] Auto opcode/modules update
+- [x] Auto opcode/modules update (using caali proxy, i will doing my own updater later)
 - [ ] Mod installer
 - [ ] ez api for other electron modules
 - [ ] inv tab/minimap tab ?

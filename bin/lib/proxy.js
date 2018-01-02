@@ -1,9 +1,9 @@
-const REGION = process.argv[2]
-const REGIONS = require("./regions")
-const currentRegion = REGIONS[REGION]
+const region = require("../config.json").region
+const regions = require("./regions")
+const currentRegion = regions[region]
 
 if (!currentRegion) {
-	console.error("Unsupported region: " + REGION)
+	console.error("Unsupported region: " + region)
 	return
 }
 
@@ -23,20 +23,19 @@ catch (e) {
 	switch (e.code) {
 		case "EACCES":
 			console.error(`ERROR: Hosts file is set to read-only.
-
-* Make sure no anti-virus software is running.
-* Locate "${e.path}", right click the file, click 'Properties', uncheck 'Read-only' then click 'OK'.`)
+	
+	* Make sure no anti-virus software is running.
+	* Locate "${e.path}", right click the file, click 'Properties', uncheck 'Read-only' then click 'OK'.`)
 			break
 		case "EPERM":
 			console.error(`ERROR: Insufficient permission to modify hosts file.
-
-* Make sure no anti-virus software is running.
-* Right click run.bat and select 'Run as administrator'.`)
+	
+	* Make sure no anti-virus software is running.
+	* Right click TeraProxy.bat and select 'Run as administrator'.`)
 			break
 		default:
 			throw e
 	}
-
 	process.exit(1)
 }
 
@@ -87,42 +86,59 @@ function listenHandler(err) {
 	}
 }
 
-const { Connection, RealClient } = require("tera-proxy-game")
+const autoUpdate = require("./update")
+
 function createServ(target, socket) {
 	socket.setNoDelay(true)
 
-	const connection = new Connection()
-	const client = new RealClient(connection, socket)
-	const srvConn = connection.connect(client, {
-		host: target.ip,
-		port: target.port
-	})
-
 	populateModulesList()
 
-	for (let i = 0, arr = modules, len = arr.length; i < len; ++i)
-		connection.dispatch.load(arr[i], module)
 
-	let remote = "???"
+	autoUpdate(moduleBase, modules).then((updateResult) => {
+		if (!updateResult["tera-data"])
+			console.log("WARNING: There were errors updating tera-data. This might result in further errors.")
 
-	socket.on("error", console.warn)
+		const { Connection, RealClient } = require("tera-proxy-game")
 
-	srvConn.on("connect", () => {
-		remote = socket.remoteAddress + ":" + socket.remotePort
-		console.log("[connection] routing %s to %s:%d", remote, srvConn.remoteAddress, srvConn.remotePort)
-	})
+		const connection = new Connection()
+		const client = new RealClient(connection, socket)
+		const srvConn = connection.connect(client, {
+			host: target.ip,
+			port: target.port
+		})
 
-	srvConn.on("error", console.warn)
-
-	srvConn.on("close", () => {
-		console.log("[connection] %s disconnected", remote)
-		console.log("[proxy] unloading user modules")
-		for (let i = 0, arr = Object.keys(require.cache), len = arr.length; i < len; ++i) {
-			const key = arr[i]
-			if (key.startsWith(moduleBase)) {
-				delete require.cache[key]
-			}
+		for (let name of updateResult["failed"])
+			console.log("[update] Module %s could not be updated and will not be loaded!", name)
+		for (let name of updateResult["legacy"]) {
+			console.log("[update] Module %s does not support auto-updating!", name)
+			connection.dispatch.load(name, module)
 		}
+		for (let name of updateResult["updated"])
+			connection.dispatch.load(name, module)
+
+		let remote = "???"
+
+		socket.on("error", console.warn)
+
+		srvConn.on("connect", () => {
+			remote = socket.remoteAddress + ":" + socket.remotePort
+			console.log("[connection] routing %s to %s:%d", remote, srvConn.remoteAddress, srvConn.remotePort)
+		})
+
+		srvConn.on("error", console.warn)
+
+		srvConn.on("close", () => {
+			console.log("[connection] %s disconnected", remote)
+			console.log("[proxy] unloading user modules")
+			for (let i = 0, arr = Object.keys(require.cache), len = arr.length; i < len; ++i) {
+				const key = arr[i]
+				if (key.startsWith(moduleBase)) {
+					delete require.cache[key]
+				}
+			}
+		})
+	}).catch((e) => {
+		console.log("ERROR: Unable to auto-update: %s", e)
 	})
 }
 

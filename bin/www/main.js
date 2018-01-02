@@ -166,8 +166,4 @@ jQuery(($) => {
 		$('head').append('<link rel="stylesheet" href="css/' + theme + '.css">')
 	})
 
-	/* $('#updatemodules').click(() => {
-		ipcRenderer.send('update my modules pls')
-	}) */
-
 })
