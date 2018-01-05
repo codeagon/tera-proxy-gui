@@ -5,12 +5,16 @@
 	"main": "bin/main.js",
 	"author": "Mathi",
 	"scripts": {
-		"start": "electron ."
+		"start": "electron .",
+		"install": ".\\node_modules\\.bin\\electron-rebuild.cmd"
 	},
 	"dependencies": {
 		"electron": "^1.7.10",
 		"tera-data": "github:meishuu/tera-data",
 		"tera-proxy-game": "github:pinkipi/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
+	},
+	"devDependencies": {
+		"electron-rebuild": "^1.6.0"
 	}
 }
