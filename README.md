@@ -1,5 +1,5 @@
 # Tera Proxy Gui
-wow amazing
+wow amazing (no)
 
 ![proxy](https://i.imgur.com/f3UX2jY.png)
 
@@ -26,8 +26,8 @@ I dont have a lot of time to maintain this shit gui, If you want to help i can p
 
 ## Todo
 - [x] Release
-- [x] Add theme change
-- [x] Auto opcode/modules update (using caali proxy, i will doing my own updater later)
+- [x] Multiple themes
+- [ ] Auto opcode/modules update
 - [ ] Mod installer
 - [ ] ez api for other electron modules
 - [ ] inv tab/minimap tab ?

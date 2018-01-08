@@ -1,0 +1,14 @@
+{
+	"1": {
+		"name": "Karas (Proxy)",
+		"ip": "127.0.0.28",
+		"port": 7801,
+		"keepOriginal": true
+	},
+	"2": {
+		"name": "Zuras (Proxy)",
+		"ip": "127.0.0.28",
+		"port": 7802,
+		"keepOriginal": true
+	}
+}

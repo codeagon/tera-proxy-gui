@@ -5,13 +5,21 @@
 	"main": "bin/main.js",
 	"author": "Mathi",
 	"scripts": {
-		"start": "electron ."
+		"start": "electron .",
+		"install": ".\\node_modules\\.bin\\electron-rebuild.cmd"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Mathicha/tera-proxy-gui.git"
 	},
 	"dependencies": {
 		"electron": "^1.7.10",
 		"request-promise-native": "^1.0.5",
 		"tera-data": "github:hackerman-caali/tera-data",
-		"tera-proxy-game": "github:hackerman-caali/tera-proxy-game",
+		"tera-proxy-game": "github:mathicha/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
+	},
+	"devDependencies": {
+		"electron-rebuild": "^1.6.0"
 	}
 }
