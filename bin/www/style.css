@@ -1,3 +1,5 @@
+/* var(--AccentColor) */
+
 * {
 	margin: 0;
 	padding: 0;
@@ -11,23 +13,77 @@ html, body, .container {
 
 .container {
 	box-sizing: border-box;
-	background-color: var(--AccentColor);
+	background-color: #000;
 	color: #FFF;
-	border-radius: 8px
+	user-select: none
 }
 
-.Modules {
-	height: 200px;
+#title {
+	background-color: var(--AccentColor);
+	position: fixed;
+	height: 32px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	-webkit-app-region: drag
+}
+
+#title>a {
+	position: fixed;
+	left: 32px;
+	line-height: 32px;
+	cursor: default
+}
+
+#syringe {
+	position: fixed;
+	margin: 4px;
+	width: 24px;
+	height: 24px
+}
+
+#gear {
+	float: right;
+	margin: 6px;
+	width: 20px;
+	height: 20px;
+	filter: invert(100%);
+	-webkit-app-region: no-drag
+}
+
+#modules {
+	position: relative;
+	top: 32px;
+	height: auto;
 	overflow: hidden;
 	overflow-y: auto
 }
 
-.title {
-    font-size: 33px;
-    display: table;
-    margin: 0 auto
+#modules>ul>li {
+	cursor: pointer;
+	padding: 1px 8px
 }
 
-.title>img {
-	width: 75px
+#modules>ul>li:first-child {
+	padding-top: 4px
+}
+
+.module.disable:before {
+	content: '\25CF  ';
+	color: #E81C4F
+}
+
+.module.enable:before {
+	content: '\25CF  ';
+	color: #19CF86
+}
+
+#refresh {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 6px;
+	width: 20px;
+	height: 20px;
+	filter: invert(100%)
 }

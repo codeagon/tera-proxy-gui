@@ -31,6 +31,7 @@ app.on('ready', () => {
 			showMainWindow()
 			mainWindowsisopen = true
 		}
+		if (debug) mainWindow.show()
 	})
 
 	ipcMain.on('loaded', () => {
@@ -53,36 +54,30 @@ app.on('ready', () => {
 		fs.writeFileSync('./bin/config.json', JSON.stringify(config, null, "\t"))
 	})
 
-	ipcMain.on('update modules', () => {
+	ipcMain.on('refresh modules', () => {
 		proxyisrunning ? '' : populateModulesList()
 	})
 
-	ipcMain.on('load modules', (event, name) => {
-		togglemodule(name, true)
-	})
-
-	ipcMain.on('unload modules', (event, name) => {
-		togglemodule(name, false)
+	ipcMain.on('toggle module', (event, name) => {
+		togglemodule(name)
 	})
 })
 
 function showMainWindow() {
 	let xy = getTraypos(),
 		x = xy[0],
-		y = xy[1],
-		isAero = electron.systemPreferences.isAeroGlassEnabled()
+		y = xy[1]
 
 	mainWindow = new electron.BrowserWindow({
 		width: 250,
 		height: 400,
 		x: x,
 		y: y,
-		resizable: false,
+		resizable: debug,
 		title: 'Tera Proxy (WIP)',
 		icon: icon,
 		frame: false,
-		backgroundColor: isAero ? '#00000000' : '#FFF',
-		transparent: isAero
+		backgroundColor: '#000'
 	})
 
 	mainWindow.loadURL(url.format({
@@ -289,7 +284,7 @@ function customServerCallback(server) {
 function populateModulesList() {
 	modules = fs.readdirSync(moduleBase)
 	for (let m in modules)
-		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), 'disable'] : modules[m] = [modules[m], 'enable']
+		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), false] : modules[m] = [modules[m], true]
 	mainWindow.webContents.send('modules', modules)
 }
 
@@ -305,17 +300,22 @@ function cleanExit() {
 	}
 }
 
-function togglemodule(name, load) {
+function togglemodule(name) {
 	try {
-		if (proxyisrunning)
-			load ? connection.dispatch.load(name, 'modules') : connection.dispatch.unload(name)
 		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name)
-				modules[i][1] = load ? 'enable' : 'disable'
+			if (modules[i][0] === name) {
+				modules[i][1] = modules[i][1] ? false : true
+				if (proxyisrunning) {
+					modules[i][1] ? connection.dispatch.unload(name) : connection.dispatch.load(name, 'modules')
+					console.log(`${modules[i][1] ? 'dis' : 'en'}abling ${name}`)
+				}
+			}
 	} catch (e) {
 		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name)
-				modules[i][1] = load ? 'disable' : 'enable'
+			if (modules[i][0] === name) {
+				modules[i][1] = modules[i][1] ? true : false
+				console.log(`error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
+			}
 	}
 	mainWindow.webContents.send('modules', modules)
 }

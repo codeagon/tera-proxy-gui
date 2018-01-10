@@ -11,11 +11,10 @@ function StyleThisShit() {
 }
 
 function ShowModules(modules) {
-	$('ul[class="Modules"]').empty()
-	$('ul[class="Modules"]').append(
+	$('#modules>ul').empty().append(
 		modules.map(module =>
 			$('<li>').append()
-				.addClass('module ' + module[1])
+				.addClass(`module ${module[1] ? 'en' : 'dis'}able`)
 				.text(module[0])
 		)
 	)
@@ -29,6 +28,16 @@ jQuery(($) => {
 	// update modules list
 	ipcRenderer.on('modules', (event, modules) => {
 		ShowModules(modules)
+	})
+
+	// (en/dis)able modules
+	$('#modules>ul').on('click', 'li', function () {
+		ipcRenderer.send('toggle module', $(this).text())
+	})
+
+	// refresh modules
+	$('#refresh').click(function () {
+		ipcRenderer.send('refresh modules')
 	})
 
 	// hello boi im ready to inject
