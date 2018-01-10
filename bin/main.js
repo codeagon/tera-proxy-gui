@@ -230,7 +230,7 @@ function createServ(target, socket) {
 	})
 
 	for (let i = 0, len = modules.length; i < len; ++i)
-		modules[i][1] === 'enable' ? loadmodule(modules[i][0]) : ''
+		modules[i][1] === true ? connection.dispatch.load(modules[i][0], 'modules') : ''
 
 	let remote = '???'
 
@@ -239,7 +239,6 @@ function createServ(target, socket) {
 	srvConn.on('connect', () => {
 		remote = socket.remoteAddress + ':' + socket.remotePort
 		console.log('[connection] routing %s to %s:%d', remote, srvConn.remoteAddress, srvConn.remotePort)
-		console.log('inject me daddy ( ͡° ͜ʖ ͡°)')
 	})
 
 	srvConn.on('error', console.warn)
