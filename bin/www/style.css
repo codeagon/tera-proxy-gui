@@ -1,0 +1,33 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit
+}
+
+html, body, .container {
+	font-family: roboto;
+	height: 100%
+}
+
+.container {
+	box-sizing: border-box;
+	background-color: var(--AccentColor);
+	color: #FFF;
+	border-radius: 8px
+}
+
+.Modules {
+	height: 200px;
+	overflow: hidden;
+	overflow-y: auto
+}
+
+.title {
+    font-size: 33px;
+    display: table;
+    margin: 0 auto
+}
+
+.title>img {
+	width: 75px
+}
