@@ -1,7 +1,10 @@
 const { remote, ipcRenderer } = require('electron')
 
-let debug = true,
+let debug = remote.getGlobal('debug'),
 	config = remote.getGlobal('config')
+
+if (debug)
+	require('devtron').install()
 
 function StyleThisShit() {
 	$(':root').css('--AccentColor', '#' + remote.systemPreferences.getAccentColor().substr(0, 6))
@@ -28,6 +31,12 @@ jQuery(($) => {
 	// update modules list
 	ipcRenderer.on('modules', (event, modules) => {
 		ShowModules(modules)
+	})
+
+	// settings
+	$('#settings').hide()
+	$('#gear').click(function () {
+		$('#settings').fadeToggle('fast')
 	})
 
 	// (en/dis)able modules

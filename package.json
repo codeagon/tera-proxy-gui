@@ -20,6 +20,7 @@
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
 	},
 	"devDependencies": {
+		"devtron": "^1.4.0",
 		"electron-rebuild": "^1.6.0"
 	}
 }

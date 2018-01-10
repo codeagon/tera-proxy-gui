@@ -5,10 +5,11 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 
 const debug = true
+global.debug = debug
 
 let config
 try { config = require('./config.json') }
-catch (e) { config = { "region": "EU", "autostart": false, "theme": "black" } }
+catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark" } }
 global.config = config
 
 try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
@@ -71,6 +72,8 @@ function showMainWindow() {
 	mainWindow = new electron.BrowserWindow({
 		width: 250,
 		height: 400,
+		minWidth: 250,
+		minHeight: 400,
 		x: x,
 		y: y,
 		resizable: debug,
