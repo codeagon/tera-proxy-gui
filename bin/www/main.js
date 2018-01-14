@@ -6,7 +6,9 @@ let debug = remote.getGlobal('debug'),
 if (debug)
 	require('devtron').install()
 
-function StyleThisShit() {
+function WinLoaded() {
+	$(`option:contains(${config.region}):first`).prop('selected', true)
+	if (config.autostart) $('#autostart').prop('checked', true)
 	$(':root').css('--AccentColor', '#' + remote.systemPreferences.getAccentColor().substr(0, 6))
 	remote.systemPreferences.on('accent-color-changed', (event, color) => {
 		$(':root').css('--AccentColor', '#' + color.substr(0, 6))
@@ -26,11 +28,16 @@ function ShowModules(modules) {
 jQuery(($) => {
 
 	// apply colors
-	StyleThisShit()
+	WinLoaded()
 
 	// update modules list
 	ipcRenderer.on('modules', (event, modules) => {
 		ShowModules(modules)
+	})
+
+	// big btn in middle on this shit
+	$('#proxy>a').click(function () {
+		ipcRenderer.send('proxy')
 	})
 
 	// settings
@@ -47,6 +54,22 @@ jQuery(($) => {
 	// refresh modules
 	$('#refresh').click(function () {
 		ipcRenderer.send('refresh modules')
+	})
+
+	// autostart
+	$('#autostart').click(function () {
+		config.autostart = $(this).is(':checked') ? true : false
+		ipcRenderer.send('config', config)
+	})
+
+	// state
+	ipcRenderer.on('state', (event, s) => {
+		$('#proxy>a').text(s)
+	})
+
+	// change theme
+	$('#theme').click(function () {
+
 	})
 
 	// hello boi im ready to inject

@@ -5,22 +5,24 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 
 const debug = true
-global.debug = debug
 
 let config
 try { config = require('./config.json') }
 catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark" } }
-global.config = config
 
 try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
 catch (e) { fs.mkdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
 
-const icon = path.join(__dirname, 'www/icon.png')
+const icon = path.join(__dirname, 'www/img/icon.png')
 
 let mainWindow,
 	tray,
-	proxyisrunning = false,
+	proxystate = 0,
+	states = ['Start Proxy', 'Stop Proxy', 'err check logs', 'starting...'],
 	mainWindowsisopen = false
+
+global.debug = debug
+global.config = config
 
 app.on('ready', () => {
 	tray = new Tray(icon)
@@ -36,32 +38,31 @@ app.on('ready', () => {
 	})
 
 	ipcMain.on('loaded', () => {
-		mainWindow.webContents.send('config', config)
-		// mainWindow.webContents.send('lang', app.getLocale())
-		if (config.autostart) slsProxy(config.region)
+		state()
 		populateModulesList()
 	})
 
-	ipcMain.on('run proxy', () => {
-		slsProxy()
+	ipcMain.on('proxy', () => {
+		switch (proxystate) {
+			case 0: slsProxy()
+			case 1: cleanExit()
+		}
 	})
 
-	ipcMain.on('close proxy', () => {
-		cleanExit()
-	})
-
-	ipcMain.on('save config', (event, c) => {
+	ipcMain.on('config', (event, c) => {
 		config = c
 		fs.writeFileSync('./bin/config.json', JSON.stringify(config, null, "\t"))
 	})
 
 	ipcMain.on('refresh modules', () => {
-		proxyisrunning ? '' : populateModulesList()
+		if (proxystate === 0) populateModulesList()
 	})
 
 	ipcMain.on('toggle module', (event, name) => {
 		togglemodule(name)
 	})
+
+	if (config.autostart) slsProxy(config.region)
 })
 
 function showMainWindow() {
@@ -80,7 +81,7 @@ function showMainWindow() {
 		title: 'Tera Proxy (WIP)',
 		icon: icon,
 		frame: false,
-		backgroundColor: '#000'
+		backgroundColor: config.theme === 'dark' ? '#14171A' : '#FFF'
 	})
 
 	mainWindow.loadURL(url.format({
@@ -133,11 +134,36 @@ var contextMenu = Menu.buildFromTemplate([
 	{
 		label: 'Quit',
 		click: () => {
-			proxyisrunning ? cleanExit() : ''
+			if (proxystate === 1) cleanExit()
 			app.exit()
 		}
 	}
 ])
+
+function togglemodule(name) {
+	try {
+		for (let i = 0, len = modules.length; i < len; ++i)
+			if (modules[i][0] === name) {
+				modules[i][1] = !modules[i][1]
+				if (proxystate === 1) {
+					console.log(`${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
+					modules[i][1] ? connection.dispatch.load(name, 'modules') : connection.dispatch.unload(name)
+				}
+			}
+	} catch (e) {
+		for (let i = 0, len = modules.length; i < len; ++i)
+			if (modules[i][0] === name) {
+				console.log(`error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
+				modules[i][1] = !modules[i][1]
+			}
+	}
+	mainWindow.webContents.send('modules', modules)
+}
+
+function state(s) {
+	proxystate = s || proxystate
+	if (mainWindowsisopen) mainWindow.webContents.send('state', states[proxystate])
+}
 
 /*
  * TERA PROXY 
@@ -193,6 +219,7 @@ function slsProxy() {
 			default:
 				throw e
 		}
+		state(2)
 		return
 	}
 
@@ -230,7 +257,7 @@ function createServ(target, socket) {
 	})
 
 	for (let i = 0, len = modules.length; i < len; ++i)
-		modules[i][1] === true ? connection.dispatch.load(modules[i][0], 'modules') : ''
+		if (modules[i][1]) connection.dispatch.load(modules[i][0])
 
 	let remote = '???'
 
@@ -251,7 +278,7 @@ function createServ(target, socket) {
 				delete require.cache[arr[i]]
 	})
 
-	proxyisrunning = true
+	state(1)
 }
 
 function listenHandler(err) {
@@ -292,7 +319,6 @@ function populateModulesList() {
 
 function cleanExit() {
 	console.log('closing proxy...')
-	proxyisrunning = false
 	try { hosts.remove(listenHostname, hostname) }
 	catch (_) { }
 	proxy.close()
@@ -300,24 +326,5 @@ function cleanExit() {
 		step.value.close()
 		console.log(step.value)
 	}
-}
-
-function togglemodule(name) {
-	try {
-		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name) {
-				modules[i][1] = modules[i][1] ? false : true
-				if (proxyisrunning) {
-					modules[i][1] ? connection.dispatch.unload(name) : connection.dispatch.load(name, 'modules')
-					console.log(`${modules[i][1] ? 'dis' : 'en'}abling ${name}`)
-				}
-			}
-	} catch (e) {
-		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name) {
-				modules[i][1] = modules[i][1] ? true : false
-				console.log(`error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
-			}
-	}
-	mainWindow.webContents.send('modules', modules)
+	state(0)
 }
