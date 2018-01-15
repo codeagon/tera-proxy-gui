@@ -17,8 +17,8 @@ const icon = path.join(__dirname, 'www/img/icon.png')
 
 let mainWindow,
 	tray,
-	proxystate = 0,
-	states = ['Start Proxy', 'Stop Proxy', 'err check logs', 'starting...'],
+	proxystate = '0',
+	states = ['Start Proxy', 'Stop Proxy', 'err check logs'],
 	mainWindowsisopen = false
 
 global.debug = debug
@@ -43,8 +43,10 @@ app.on('ready', () => {
 	})
 
 	ipcMain.on('proxy', () => {
-		if (proxystate === 0) slsProxy()
-		else if (proxystate === 1) cleanExit()
+		switch (proxystate) {
+			case '0': slsProxy(); return
+			case '1': cleanExit(); return
+		}
 	})
 
 	ipcMain.on('config', (event, c) => {
@@ -53,7 +55,7 @@ app.on('ready', () => {
 	})
 
 	ipcMain.on('refresh modules', () => {
-		if (proxystate === 0) populateModulesList()
+		if (proxystate === '0') populateModulesList()
 	})
 
 	ipcMain.on('toggle module', (event, name) => {
@@ -126,31 +128,31 @@ var contextMenu = Menu.buildFromTemplate([
 	{
 		label: 'Quit',
 		click: () => {
-			if (proxystate === 1) cleanExit()
+			if (proxystate === '1') cleanExit()
 			app.exit()
 		}
 	}
 ])
 
 function togglemodule(name) {
-	try {
-		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name) {
-				modules[i][1] = !modules[i][1]
-				if (proxystate === 1) {
-					console.log(`[gui] ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
-					modules[i][1] ? connection.dispatch.load(name, module) : connection.dispatch.unload(name)
-					delete require.cache[modules[i][0]]
+	for (let i = 0, len = modules.length; i < len; ++i) {
+		if (modules[i][0] === name) {
+			if (proxystate === '0') modules[i][1] = !modules[i][1]
+			else if (proxystate === '1') {
+				if (!modules[i][1]) {
+					if (connection.dispatch.load(name, module) !== null) {
+						modules[i][1] = true
+					}
+				}
+				else {
+					delete require.cache[require.resolve(name)]
+					connection.dispatch.unload(name)
+					modules[i][1] = false
 				}
 			}
-	} catch (e) {
-		for (let i = 0, len = modules.length; i < len; ++i)
-			if (modules[i][0] === name) {
-				console.log(`[gui] error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
-				modules[i][1] = !modules[i][1]
-			}
-		console.error(e)
+		}
 	}
+
 	mainWindow.webContents.send('modules', modules)
 }
 
@@ -214,7 +216,7 @@ function slsProxy() {
 			default:
 				throw e
 		}
-		state(2)
+		state('2')
 		return
 	}
 
@@ -240,7 +242,7 @@ function slsProxy() {
 		proxy.listen(listenHostname, listenHandler)
 	})
 
-	state(1)
+	state('1')
 }
 
 function createServ(target, socket) {
@@ -255,6 +257,10 @@ function createServ(target, socket) {
 
 	for (let i = 0, len = modules.length; i < len; ++i)
 		if (modules[i][1]) connection.dispatch.load(modules[i][0], module)
+
+	/* dispatch.load('ui-core', function uicore(dispatch) {
+
+	}) */
 
 	let remote = '???'
 
@@ -318,5 +324,5 @@ function cleanExit() {
 	catch (_) { }
 	proxy.close()
 	for (let i = servers.values(), step; !(step = i.next()).done;) step.value.close()
-	state(0)
+	state('0')
 }
