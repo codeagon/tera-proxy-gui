@@ -140,6 +140,7 @@ function togglemodule(name) {
 				if (proxystate === 1) {
 					console.log(`[gui] ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
 					modules[i][1] ? connection.dispatch.load(name, module) : connection.dispatch.unload(name)
+					delete require.cache[modules[i][0]]
 				}
 			}
 	} catch (e) {
@@ -316,8 +317,6 @@ function cleanExit() {
 	try { hosts.remove(listenHostname, hostname) }
 	catch (_) { }
 	proxy.close()
-	for (let i = servers.values(), step; !(step = i.next()).done;) {
-		step.value.close()
-	}
+	for (let i = servers.values(), step; !(step = i.next()).done;) step.value.close()
 	state(0)
 }
