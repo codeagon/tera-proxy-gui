@@ -1,7 +1,8 @@
 # Tera Proxy Gui
 wow amazing (no)
 
-![proxy](https://i.imgur.com/f3UX2jY.png)
+hot reload soon :333333
+![proxy](https://i.imgur.com/q6GDvw1.png)
 
 ## How to use this shit ui ??
 Download the current "stable" version from the [releases tab](https://github.com/Mathicha/tera-proxy-gui/releases).
