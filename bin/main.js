@@ -8,7 +8,7 @@ const debug = true
 
 let config
 try { config = require('./config.json') }
-catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark" } }
+catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark", "saveversion": "1" } }
 
 try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
 catch (e) { fs.mkdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
@@ -43,10 +43,8 @@ app.on('ready', () => {
 	})
 
 	ipcMain.on('proxy', () => {
-		switch (proxystate) {
-			case 0: slsProxy()
-			case 1: cleanExit()
-		}
+		if (proxystate === 0) slsProxy()
+		else if (proxystate === 1) cleanExit()
 	})
 
 	ipcMain.on('config', (event, c) => {
@@ -105,15 +103,9 @@ function getTraypos() {
 		y = t.y >= height / 2 ? true : false,
 		traypos
 
-	if (x && !y) {
-		traypos = 'top'
-	}
-	else if (!x && y) {
-		traypos = 'left'
-	}
-	else if (x && y) {
-		traypos = t.x < width - 150 ? 'bottom' : 'right'
-	}
+	if (x && !y) traypos = 'top'
+	if (!x && y) traypos = 'left'
+	if (x && y) traypos = t.x < width - 150 ? 'bottom' : 'right'
 
 	switch (traypos) {
 		case 'top':
@@ -146,16 +138,17 @@ function togglemodule(name) {
 			if (modules[i][0] === name) {
 				modules[i][1] = !modules[i][1]
 				if (proxystate === 1) {
-					console.log(`${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
-					modules[i][1] ? connection.dispatch.load(name, 'modules') : connection.dispatch.unload(name)
+					console.log(`[gui] ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
+					modules[i][1] ? connection.dispatch.load(name, module) : connection.dispatch.unload(name)
 				}
 			}
 	} catch (e) {
 		for (let i = 0, len = modules.length; i < len; ++i)
 			if (modules[i][0] === name) {
-				console.log(`error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
+				console.log(`[gui] error while ${modules[i][1] ? 'en' : 'dis'}abling ${name}`)
 				modules[i][1] = !modules[i][1]
 			}
+		console.error(e)
 	}
 	mainWindow.webContents.send('modules', modules)
 }
@@ -185,7 +178,8 @@ let currentRegion,
 	hostname,
 	modules,
 	servers,
-	proxy
+	proxy,
+	connection
 
 function slsProxy() {
 	currentRegion = regions[config.region]
@@ -244,12 +238,14 @@ function slsProxy() {
 		}
 		proxy.listen(listenHostname, listenHandler)
 	})
+
+	state(1)
 }
 
 function createServ(target, socket) {
 	socket.setNoDelay(true)
 
-	const connection = new Connection()
+	connection = new Connection()
 	const client = new RealClient(connection, socket)
 	const srvConn = connection.connect(client, {
 		host: target.ip,
@@ -257,7 +253,7 @@ function createServ(target, socket) {
 	})
 
 	for (let i = 0, len = modules.length; i < len; ++i)
-		if (modules[i][1]) connection.dispatch.load(modules[i][0])
+		if (modules[i][1]) connection.dispatch.load(modules[i][0], module)
 
 	let remote = '???'
 
@@ -277,8 +273,6 @@ function createServ(target, socket) {
 			if (arr[i].startsWith(moduleBase))
 				delete require.cache[arr[i]]
 	})
-
-	state(1)
 }
 
 function listenHandler(err) {
@@ -324,7 +318,6 @@ function cleanExit() {
 	proxy.close()
 	for (let i = servers.values(), step; !(step = i.next()).done;) {
 		step.value.close()
-		console.log(step.value)
 	}
 	state(0)
 }
