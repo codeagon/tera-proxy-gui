@@ -9,7 +9,7 @@ npm i
 
 ## Dev, read this
 For hot reload you need to add a destructor like this (if u use command)
-```
+```js
 this.destructor = () => {
 	command.remove('youcommandname')
 }
