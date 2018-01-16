@@ -10,16 +10,16 @@ let config
 try { config = require('./config.json') }
 catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark", "saveversion": "1" } }
 
-try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
-catch (e) { fs.mkdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map')) }
+try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map_base')) }
+catch (e) { fs.mkdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map_base')) }
 
 const icon = path.join(__dirname, 'www/img/icon.png')
 
-let mainWindow,
+let trayWindow,
 	tray,
 	proxystate = '0',
 	states = ['Start Proxy', 'Stop Proxy', 'err check logs'],
-	mainWindowsisopen = false
+	trayWindowsisopen = false
 
 global.debug = debug
 global.config = config
@@ -30,11 +30,11 @@ app.on('ready', () => {
 	tray.setContextMenu(contextMenu)
 
 	tray.on('click', () => {
-		if (!mainWindowsisopen) {
-			showMainWindow()
-			mainWindowsisopen = true
+		if (!trayWindowsisopen) {
+			showtrayWindow()
+			trayWindowsisopen = true
 		}
-		if (debug) mainWindow.show()
+		if (debug) trayWindow.show()
 	})
 
 	ipcMain.on('loaded', () => {
@@ -42,7 +42,8 @@ app.on('ready', () => {
 		populateModulesList()
 	})
 
-	ipcMain.on('proxy', () => {
+	ipcMain.on('proxy', (event, r) => {
+		config.region = r
 		switch (proxystate) {
 			case '0': slsProxy(); return
 			case '1': cleanExit(); return
@@ -65,12 +66,12 @@ app.on('ready', () => {
 	if (config.autostart) slsProxy(config.region)
 })
 
-function showMainWindow() {
+function showtrayWindow() {
 	let xy = getTraypos(),
 		x = xy[0],
 		y = xy[1]
 
-	mainWindow = new electron.BrowserWindow({
+	trayWindow = new electron.BrowserWindow({
 		width: 250,
 		height: 400,
 		minWidth: 250,
@@ -84,16 +85,16 @@ function showMainWindow() {
 		backgroundColor: config.theme === 'dark' ? '#14171A' : '#FFF'
 	})
 
-	mainWindow.loadURL(url.format({
+	trayWindow.loadURL(url.format({
 		pathname: path.join(__dirname, 'www/index.html')
 	}))
 
-	if (debug) mainWindow.webContents.openDevTools({ mode: 'detach' })
+	if (debug) trayWindow.webContents.openDevTools({ mode: 'detach' })
 
-	mainWindow.on('blur', () => {
+	trayWindow.on('blur', () => {
 		if (!debug) {
-			mainWindow.hide()
-			mainWindowsisopen = false
+			trayWindow.hide()
+			trayWindowsisopen = false
 		}
 	})
 }
@@ -153,12 +154,12 @@ function togglemodule(name) {
 		}
 	}
 
-	mainWindow.webContents.send('modules', modules)
+	trayWindow.webContents.send('modules', modules)
 }
 
 function state(s) {
 	proxystate = s || proxystate
-	if (mainWindowsisopen) mainWindow.webContents.send('state', states[proxystate])
+	if (trayWindowsisopen) trayWindow.webContents.send('state', states[proxystate])
 }
 
 /*
@@ -315,7 +316,7 @@ function populateModulesList() {
 	modules = fs.readdirSync(moduleBase)
 	for (let m in modules)
 		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), false] : modules[m] = [modules[m], true]
-	mainWindow.webContents.send('modules', modules)
+	trayWindow.webContents.send('modules', modules)
 }
 
 function cleanExit() {

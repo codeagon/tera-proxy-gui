@@ -3,8 +3,7 @@ const { remote, ipcRenderer } = require('electron')
 let debug = remote.getGlobal('debug'),
 	config = remote.getGlobal('config')
 
-if (debug)
-	require('devtron').install()
+if (debug) require('devtron').install()
 
 function WinLoaded() {
 	$(`option:contains(${config.region}):first`).prop('selected', true)
@@ -37,7 +36,7 @@ jQuery(($) => {
 
 	// big btn in middle on this shit
 	$('#proxy>a').click(function () {
-		ipcRenderer.send('proxy')
+		ipcRenderer.send('proxy', $('#regions').find(":selected").text())
 	})
 
 	// settings

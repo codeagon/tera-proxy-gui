@@ -14,7 +14,7 @@
 	},
 	"dependencies": {
 		"electron": "^1.7.10",
-		"tera-data": "github:hackerman-caali/tera-data",
+		"tera-data": "github:meishuu/tera-data",
 		"tera-proxy-game": "github:mathicha/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
 	},
