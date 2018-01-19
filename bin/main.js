@@ -1,3 +1,5 @@
+//todo: add comments
+
 const fs = require('fs')
 const path = require('path')
 const url = require('url')
@@ -39,14 +41,14 @@ app.on('ready', () => {
 
 	ipcMain.on('loaded', () => {
 		state()
-		populateModulesList()
+		proxystate === '1' ? trayWindow.webContents.send('modules', modules) : populateModulesList()
 	})
 
 	ipcMain.on('proxy', (event, r) => {
 		config.region = r
 		switch (proxystate) {
-			case '0': slsProxy(); return
-			case '1': cleanExit(); return
+			case '0': slsProxy(); break
+			case '1': cleanExit(); break
 		}
 	})
 
@@ -56,7 +58,7 @@ app.on('ready', () => {
 	})
 
 	ipcMain.on('refresh modules', () => {
-		if (proxystate === '0') populateModulesList()
+		proxystate === '0' ? populateModulesList() : trayWindow.webContents.send('modules', modules)
 	})
 
 	ipcMain.on('toggle module', (event, name) => {
@@ -165,8 +167,6 @@ function state(s) {
 /*
  * TERA PROXY 
  */
-
-// todo: clean that shit
 
 const regions = require('./lib/regions')
 const hosts = require('./lib/hosts')

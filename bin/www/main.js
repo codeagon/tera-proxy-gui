@@ -9,9 +9,6 @@ function WinLoaded() {
 	$(`option:contains(${config.region}):first`).prop('selected', true)
 	if (config.autostart) $('#autostart').prop('checked', true)
 	$(':root').css('--AccentColor', '#' + remote.systemPreferences.getAccentColor().substr(0, 6))
-	remote.systemPreferences.on('accent-color-changed', (event, color) => {
-		$(':root').css('--AccentColor', '#' + color.substr(0, 6))
-	})
 }
 
 function ShowModules(modules) {
