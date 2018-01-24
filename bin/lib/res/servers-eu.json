@@ -40,11 +40,5 @@
 		"ip": "127.0.0.21",
 		"port": 9256,
 		"keepOriginal": true
-	},
-	"33": {
-		"name": "(INT) - Manahan (Proxy)",
-		"ip": "127.0.0.21",
-		"port": 9257,
-		"keepOriginal": true
 	}
 }

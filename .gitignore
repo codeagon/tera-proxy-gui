@@ -2,6 +2,7 @@ bin/config.json
 !bin/node_modules/
 bin/node_modules/*
 !bin/node_modules/command
+!bin/node_modules/window
 /node_modules
 package-lock.json
 release

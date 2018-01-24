@@ -7,13 +7,11 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 
 const debug = true
+if (debug) console.log(`Node.js v${process.versions.node}, Chromium v${process.versions.chrome}, Electron v${process.versions.electron} `)
 
 let config
 try { config = require('./config.json') }
-catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark", "saveversion": "1" } }
-
-try { fs.readdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map_base')) }
-catch (e) { fs.mkdirSync(path.join(__dirname, '..', 'node_modules', 'tera-data', 'map_base')) }
+catch (e) { config = { "region": "EU", "autostart": false, "theme": "dark" } }
 
 const icon = path.join(__dirname, 'www/img/icon.png')
 
@@ -192,7 +190,7 @@ function slsProxy() {
 		console.error('Unsupported region:', config.region)
 		return
 	} else {
-		console.log('[sls] Tera-Proxy configured for region %s', config.region)
+		console.log('[sls] Tera-Proxy configured for region:', config.region)
 	}
 
 	listenHostname = currentRegion.listenHostname
@@ -259,10 +257,6 @@ function createServ(target, socket) {
 	for (let i = 0, len = modules.length; i < len; ++i)
 		if (modules[i][1]) connection.dispatch.load(modules[i][0], module)
 
-	/* dispatch.load('ui-core', function uicore(dispatch) {
-
-	}) */
-
 	let remote = '???'
 
 	socket.on('error', console.warn)
@@ -292,7 +286,7 @@ function listenHandler(err) {
 		}
 		else if (code === 'EACCES') {
 			console.error('ERROR: Another process is already using port %s.\nPlease close or uninstall the application first:', currentRegion.port)
-			return require('./netstat')()
+			return require('./netstat')(port)
 		}
 		throw err
 	}

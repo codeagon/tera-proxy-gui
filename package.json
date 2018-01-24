@@ -13,13 +13,13 @@
 		"url": "git+https://github.com/Mathicha/tera-proxy-gui.git"
 	},
 	"dependencies": {
-		"electron": "^1.7.10",
+		"electron": "^1.8.2-beta.4",
 		"tera-data": "github:meishuu/tera-data",
-		"tera-proxy-game": "github:mathicha/tera-proxy-game",
+		"tera-proxy-game": "github:pinkipi/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
 	},
 	"devDependencies": {
 		"devtron": "^1.4.0",
-		"electron-rebuild": "^1.6.0"
+		"electron-rebuild": "^1.7.3"
 	}
 }

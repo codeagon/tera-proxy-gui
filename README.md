@@ -8,9 +8,10 @@ npm i
 (as admin) run TeraProxy.bat or npm start
 
 ## Dev, read this
-For hot reload you need to add a destructor like this (if u use command)
+For hot reload you need to add a destructor like this
 ```js
 this.destructor = () => {
-	command.remove('youcommandname')
+	command.remove('yourcommandname')
+	window.remove('yourwindowname')
 }
 ```
