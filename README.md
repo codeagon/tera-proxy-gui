@@ -7,13 +7,7 @@ wow amazing
 Download the current "stable" version from the [releases tab](https://github.com/Mathicha/tera-proxy-gui/releases).
 Start it with 'run.bat' (as admin).
 
-Or download the last version from here
-```
-git clone https://github.com/Mathicha/tera-proxy-gui
-cd tera-proxy-gui
-npm i
-npm start
-```
+(Or check [not-master](https://github.com/Mathicha/tera-proxy-gui/tree/not-master) branch)
 
 If this doesn't work open an [issues](https://github.com/Mathicha/tera-proxy-gui/issues/new), or message me on discord Mathi#7354
 
