@@ -9,7 +9,7 @@ Start it with 'run.bat' (as admin).
 
 (Or check [not-master](https://github.com/Mathicha/tera-proxy-gui/tree/not-master) branch)
 
-If this doesn't work open an [issues](https://github.com/Mathicha/tera-proxy-gui/issues/new), or message me on discord Mathi#7354
+If this doesn't work open an [issues](https://github.com/Mathicha/tera-proxy-gui/issues/new), or message me on discord Mathi#6969
 
 ## Note
 Feel free to contribute 😇
