@@ -7,7 +7,7 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 
 const debug = true
-if (debug) console.log(`Node.js v${process.versions.node}, Chromium v${process.versions.chrome}, Electron v${process.versions.electron} `)
+if (debug) console.log(`Running Node.js v${process.versions.node} on Electron v${process.versions.electron} (Chromium v${process.versions.chrome})` + '\r\n')
 
 let config
 try { config = require('./config.json') }
@@ -45,7 +45,7 @@ app.on('ready', () => {
 	ipcMain.on('proxy', (event, r) => {
 		config.region = r
 		switch (proxystate) {
-			case '0': slsProxy(); break
+			case '0': ChecksAndStart(); break
 			case '1': cleanExit(); break
 		}
 	})
@@ -63,7 +63,7 @@ app.on('ready', () => {
 		togglemodule(name)
 	})
 
-	if (config.autostart) slsProxy(config.region)
+	if (config.autostart) ChecksAndStart()
 })
 
 function showtrayWindow() {
@@ -169,21 +169,17 @@ function state(s) {
 const regions = require('./lib/regions')
 const hosts = require('./lib/hosts')
 
-const SlsProxy = require('tera-proxy-sls')
 const { Connection, RealClient } = require('tera-proxy-game')
-
-const moduleBase = path.join(__dirname, 'node_modules')
 
 let currentRegion,
 	customServers,
 	listenHostname,
 	hostname,
-	modules,
 	servers,
 	proxy,
 	connection
 
-function slsProxy() {
+function ChecksAndStart() {
 	currentRegion = regions[config.region]
 
 	if (!currentRegion) {
@@ -218,7 +214,22 @@ function slsProxy() {
 		state('2')
 		return
 	}
+	startProxy()
+}
 
+const moduleBase = path.join(__dirname, 'node_modules')
+let modules
+
+function populateModulesList() {
+	modules = fs.readdirSync(moduleBase)
+	for (let m in modules)
+		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), false] : modules[m] = [modules[m], true]
+	trayWindow.webContents.send('modules', modules)
+}
+
+const SlsProxy = require('tera-proxy-sls')
+
+function startProxy() {
 	servers = new Map()
 	proxy = new SlsProxy(currentRegion)
 
@@ -242,6 +253,36 @@ function slsProxy() {
 	})
 
 	state('1')
+}
+
+function customServerCallback(server) {
+	const { address, port } = server.address()
+	console.log(`[game] listening on ${address}:${port}`)
+}
+
+function listenHandler(err) {
+	if (err) {
+		const { code } = err
+		if (code === 'EADDRINUSE') {
+			console.error('ERROR: Another instance of TeraProxy is already running, please close it then try again.')
+			process.exit()
+		}
+		else if (code === 'EACCES') {
+			let port = currentRegion.port
+			console.error('ERROR: Another process is already using port ' + port + '.\nPlease close or uninstall the application first:')
+			return require('./netstat')(port)
+		}
+		throw err
+	}
+
+	hosts.set(listenHostname, hostname)
+	console.log('[sls] server list overridden')
+
+	for (let i = servers.entries(), step; !(step = i.next()).done;) {
+		const [id, server] = step.value
+		const currentCustomServer = customServers[id]
+		server.listen(currentCustomServer.port, currentCustomServer.ip || '127.0.0.1', customServerCallback.bind(null, server))
+	}
 }
 
 function createServ(target, socket) {
@@ -275,42 +316,6 @@ function createServ(target, socket) {
 			if (arr[i].startsWith(moduleBase))
 				delete require.cache[arr[i]]
 	})
-}
-
-function listenHandler(err) {
-	if (err) {
-		const { code } = err
-		if (code === 'EADDRINUSE') {
-			console.error('ERROR: Another instance of TeraProxy is already running, please close it then try again.')
-			process.exit()
-		}
-		else if (code === 'EACCES') {
-			console.error('ERROR: Another process is already using port %s.\nPlease close or uninstall the application first:', currentRegion.port)
-			return require('./netstat')(port)
-		}
-		throw err
-	}
-
-	hosts.set(listenHostname, hostname)
-	console.log('[sls] server list overridden')
-
-	for (let i = servers.entries(), step; !(step = i.next()).done;) {
-		const [id, server] = step.value
-		const currentCustomServer = customServers[id]
-		server.listen(currentCustomServer.port, currentCustomServer.ip || '127.0.0.1', customServerCallback.bind(null, server))
-	}
-}
-
-function customServerCallback(server) {
-	const { address, port } = server.address()
-	console.log(`[game] listening on ${address}:${port}`)
-}
-
-function populateModulesList() {
-	modules = fs.readdirSync(moduleBase)
-	for (let m in modules)
-		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), false] : modules[m] = [modules[m], true]
-	trayWindow.webContents.send('modules', modules)
 }
 
 function cleanExit() {
