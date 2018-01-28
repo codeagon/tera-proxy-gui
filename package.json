@@ -2,7 +2,7 @@
 	"name": "tera-proxy-gui",
 	"version": "0.0.2",
 	"description": "Tera Proxy with nice gui",
-	"main": "bin/main.js",
+	"main": "bin/lib/main.js",
 	"author": "Mathi",
 	"scripts": {
 		"start": "electron .",
