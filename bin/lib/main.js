@@ -217,13 +217,15 @@ function ChecksAndStart() {
 	startProxy()
 }
 
-const moduleBase = path.join(__dirname, 'node_modules')
-let modules
+const moduleBase = path.join(__dirname, '..', 'node_modules')
+let modules = []
 
 function populateModulesList() {
-	modules = fs.readdirSync(moduleBase)
-	for (let m in modules)
-		modules[m].charAt(0) === '_' ? modules[m] = [modules[m].substr(1, modules[m].length), false] : modules[m] = [modules[m], true]
+	for (let i = 0, k = -1, arr = fs.readdirSync(moduleBase), len = arr.length; i < len; ++i) {
+		const name = arr[i]
+		if (name[0] === '.' || name[0] === '_') continue
+		modules[++k] = [name, true]
+	}
 	trayWindow.webContents.send('modules', modules)
 }
 
