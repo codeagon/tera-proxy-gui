@@ -1,0 +1,152 @@
+/* var(--AccentColor) */
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: inherit
+}
+
+html, body, .container {
+	font-family: roboto;
+	height: 100%
+}
+
+.container {
+	box-sizing: border-box;
+	background-color: #FFF;
+	color: #14171A;
+	user-select: none
+}
+
+#title-bar {
+	background-color: var(--AccentColor);
+	position: fixed;
+	height: 64px;
+	top: 0px;
+	left: 0px;
+	right: 0px;
+	-webkit-app-region: drag
+}
+
+#title {
+	position: fixed;
+	left: 32px;
+	line-height: 32px;
+	cursor: default
+}
+
+#proxy {
+	position: fixed;
+	height: 32px;
+	top: 32px;
+	left: 0px;
+	right: 0px;
+	background-color: rgba(255, 255, 255, 0.75)
+}
+
+#proxy>a {
+	position: relative;
+	float: left;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	height: 32px;
+	padding: 0 8px;
+	font-size: 24px;
+	cursor: pointer;
+	-webkit-app-region: no-drag
+}
+
+#syringe {
+	position: fixed;
+	margin: 4px;
+	width: 24px;
+	height: 24px
+}
+
+#gear {
+	float: right;
+	margin: 6px;
+	width: 20px;
+	height: 20px;
+	filter: invert(0%);
+	cursor: pointer;
+	-webkit-app-region: no-drag
+}
+
+#gear:hover {
+	filter: invert(25%)
+}
+
+#modules {
+	position: relative;
+	top: 64px;
+	height: auto;
+	overflow: hidden;
+	overflow-y: auto
+}
+
+#modules>ul>li {
+	cursor: pointer;
+	padding: 1px 8px
+}
+
+#modules>ul>li:first-child {
+	padding-top: 4px
+}
+
+.module.disable:before {
+	content: '\25CF  ';
+	color: #E81C4F
+}
+
+.module.enable:before {
+	content: '\25CF  ';
+	color: #19CF86
+}
+
+#refresh {
+	position: fixed;
+	bottom: 0;
+	right: 0;
+	margin: 6px;
+	width: 20px;
+	height: 20px;
+	filter: invert(0%);
+	cursor: pointer
+}
+
+#refresh:hover {
+	filter: invert(25%)
+}
+
+#theme.dark {
+	background-color: #292f33
+}
+
+#theme.light {
+	background-color: #e1e8ed
+}
+
+#theme {
+	display: inline-block;
+	width: 20px;
+	height: 20px;
+	border-radius: 50%;
+	margin-right: 4px;
+	margin-bottom: -6px
+}
+
+#settings {
+	background-color: #FFF;
+	position: fixed;
+	top: 32px;
+	right: 32px;
+    width: 186px;
+    border-radius: 4px;
+    box-shadow: 0 0 1px 1px var(--AccentColor)
+}
+
+#settings>div {
+	padding: 8px
+}
