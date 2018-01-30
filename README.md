@@ -16,7 +16,7 @@ Feel free to contribute 😇
 
 I have also included pinkie [default modules](https://github.com/pinkipi/tera-proxy/tree/master/bin/node_modules)
 
-I dont have a lot of time to maintain this shit gui, If you want to help i can put you in collaborators on this git
+I don't recommend using this if you don't have a lot of RAM (electron uses ~100MB)
 
 ## Todo
 - [x] Release
