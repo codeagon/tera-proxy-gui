@@ -7,7 +7,7 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 
 const debug = true
-if (debug) console.log(`Running Node.js v${process.versions.node} on Electron v${process.versions.electron} (Chromium v${process.versions.chrome})` + '\r\n')
+if (debug) console.log(`Running Node.js ${process.versions.node} on Electron ${process.versions.electron} (Chromium ${process.versions.chrome})` + '\r\n')
 
 let config
 try { config = require('./config.json') }
