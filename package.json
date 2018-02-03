@@ -1,6 +1,6 @@
 {
 	"name": "tera-proxy-gui",
-	"version": "not-master",
+	"version": "0.0.0",
 	"description": "Tera Proxy with nice gui",
 	"main": "bin/lib/main.js",
 	"author": "Mathi",
@@ -13,7 +13,7 @@
 		"url": "git+https://github.com/Mathicha/tera-proxy-gui.git"
 	},
 	"dependencies": {
-		"electron": "^1.8.2-beta.4",
+		"electron": "^1.8.2-beta.5",
 		"request-promise-native": "^1.0.5",
 		"tera-data": "github:hackerman-caali/tera-data",
 		"tera-proxy-game": "github:hackerman-caali/tera-proxy-game",
