@@ -16,7 +16,7 @@
 		"electron": "^1.8.2-beta.5",
 		"request-promise-native": "^1.0.5",
 		"tera-data": "github:hackerman-caali/tera-data",
-		"tera-proxy-game": "github:hackerman-caali/tera-proxy-game",
+		"tera-proxy-game": "github:Mathicha/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
 	},
 	"devDependencies": {
