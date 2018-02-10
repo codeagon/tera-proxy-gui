@@ -50,7 +50,7 @@ module.exports = {
 		address: '103.80.216.189',
 		port: 80,
 		customServers: require('./res/servers-th.json'),
-		listenHostname: '127.0.0.18'
+		listenHostname: '127.0.0.16'
 	},
 	'EU-TEST': {
 		hostname: 'devt2-web-sls.tera.gfsrv.net',
@@ -58,13 +58,13 @@ module.exports = {
 		port: 4566,
 		pathname: ['/servers/list.uk', '/servers/list.de', '/servers/list.fr'],
 		customServers: require('./res/servers-eu-test.json'),
-		listenHostname: '127.0.0.16'
+		listenHostname: '127.0.0.17'
 	},
 	'KR-TEST': {
 		url: 'http://tera.nexon.com/launcherOpenTest/sls/servers/list.xml',
 		hostname: 'tera.nexon.com',
 		port: 80,
 		customServers: require('./res/servers-kr-test.json'),
-		listenHostname: '127.0.0.17'
+		listenHostname: '127.0.0.18'
 	}
 }
