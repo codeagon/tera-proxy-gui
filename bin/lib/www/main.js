@@ -7,16 +7,16 @@ if (debug) require('devtron').install()
 
 function WinLoaded() {
 	$(`option:contains(${config.region}):first`).prop('selected', true)
-	if (config.autostart) $('#autostart').prop('checked', true)
+	// if (config.autostart) $('#autostart').prop('checked', true)
 	$(':root').css('--AccentColor', '#' + remote.systemPreferences.getAccentColor().substr(0, 6))
 }
 
-function ShowModules(modules) {
+function ShowModules(modules, LoadedModules) {
 	$('#modules>ul').empty().append(
-		modules.map(module =>
+		modules.map(m =>
 			$('<li>').append()
-				.addClass(`module ${module[1] ? 'en' : 'dis'}able`)
-				.text(module[0])
+				.addClass(`module ${LoadedModules.includes(m) ? 'en' : 'dis'}able`)
+				.text(m)
 		)
 	)
 }
@@ -27,13 +27,13 @@ jQuery(($) => {
 	WinLoaded()
 
 	// update modules list
-	ipcRenderer.on('modules', (event, modules) => {
-		ShowModules(modules)
+	ipcRenderer.on('modules', (event, modules, LoadedModules) => {
+		ShowModules(modules, LoadedModules)
 	})
 
 	// big btn in middle on this shit
 	$('#proxy>a').click(function () {
-		ipcRenderer.send('proxy', $('#regions').find(":selected").text())
+		ipcRenderer.send('proxy')
 	})
 
 	// settings
@@ -53,19 +53,20 @@ jQuery(($) => {
 	})
 
 	// autostart
-	$('#autostart').click(function () {
+	/* $('#autostart').click(function () {
 		config.autostart = $(this).is(':checked') ? true : false
 		ipcRenderer.send('config', config)
-	})
+	}) */
 
 	// state
 	ipcRenderer.on('state', (event, s) => {
-		$('#proxy>a').text(s)
+		$('#proxy>a').text(`${s ? 'Close' : 'Start'} Proxy`)
 	})
 
-	// change theme
-	$('#theme').click(function () {
-
+	// change region
+	$('select#regions').change(function () {
+		console.log($(this).val())
+		ipcRenderer.send('change region', $(this).val())
 	})
 
 	// hello boi im ready to inject
