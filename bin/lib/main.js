@@ -4,7 +4,7 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 const proxy = require('./proxy')
 
-const debug = true
+const debug = false
 if (debug) console.log(`Running Electron ${process.versions.electron} (Node.js ${process.versions.node})` + '\r\n')
 global.debug = debug
 
