@@ -1,4 +1,4 @@
--## This branch is for dev/test/wip/shit/idkwtf
+## This branch is for dev/test/wip/shit/idkwtf
 ```
 git clone https://github.com/Mathicha/tera-proxy-gui -b not-master --single-branch
 cd tera-proxy-gui
