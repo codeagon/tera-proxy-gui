@@ -1,20 +1,26 @@
 {
 	"name": "tera-proxy-gui",
-	"version": "0.0.2",
+	"version": "0.1.0",
 	"description": "Tera Proxy with nice gui",
-	"main": "bin/main.js",
+	"main": "bin/lib/main.js",
 	"author": "Mathi",
 	"scripts": {
 		"start": "electron .",
 		"install": ".\\node_modules\\.bin\\electron-rebuild.cmd"
 	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/Mathicha/tera-proxy-gui.git"
+	},
 	"dependencies": {
-		"electron": "^1.7.10",
-		"tera-data": "github:meishuu/tera-data",
-		"tera-proxy-game": "github:pinkipi/tera-proxy-game",
+		"electron": "^1.8.2-beta.5",
+		"request-promise-native": "^1.0.5",
+		"tera-data": "github:hackerman-caali/tera-data",
+		"tera-proxy-game": "github:Mathicha/tera-proxy-game",
 		"tera-proxy-sls": "github:pinkipi/tera-proxy-sls"
 	},
 	"devDependencies": {
-		"electron-rebuild": "^1.6.0"
+		"devtron": "^1.4.0",
+		"electron-rebuild": "^1.7.3"
 	}
 }

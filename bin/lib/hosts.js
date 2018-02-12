@@ -7,7 +7,7 @@ var HOSTS = path.join(
 	'/System32/drivers/etc/hosts'
 )
 
-exports.get = function () {
+exports.get = () => {
 	var lines = []
 	try {
 		fs.readFileSync(HOSTS, { encoding: 'utf8' })
@@ -35,7 +35,7 @@ exports.get = function () {
 	return lines
 }
 
-exports.set = function (ip, host) {
+exports.set = (ip, host) => {
 	var lines = exports.get()
 
 	// Try to update entry, if host already exists in file
@@ -56,7 +56,7 @@ exports.set = function (ip, host) {
 	exports.writeFile(lines)
 }
 
-exports.remove = function (ip, host) {
+exports.remove = (ip, host) => {
 	var lines = exports.get()
 
 	// Try to remove entry, if it exists
@@ -67,7 +67,7 @@ exports.remove = function (ip, host) {
 	exports.writeFile(lines)
 }
 
-exports.writeFile = function (lines) {
+exports.writeFile = (lines) => {
 	var data = ''
 	lines.forEach(function (line) {
 		if (Array.isArray(line)) {

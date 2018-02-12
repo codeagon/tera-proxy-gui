@@ -1,7 +1,7 @@
 # Tera Proxy Gui
 wow amazing
 
-![proxy](https://i.imgur.com/f3UX2jY.png)
+![proxy](https://i.imgur.com/cNlWTCD.png)
 
 ## How to use this shit ui ??
 Download the current "stable" version from the [releases tab](https://github.com/Mathicha/tera-proxy-gui/releases).
@@ -14,16 +14,9 @@ If this doesn't work open an [issues](https://github.com/Mathicha/tera-proxy-gui
 ## Note
 Feel free to contribute 😇
 
-I have also included pinkie [default modules](https://github.com/pinkipi/tera-proxy/tree/master/bin/node_modules)
-
 I don't recommend using this if you don't have a lot of RAM (electron uses ~100MB)
 
 ## Todo
 - [x] Release
-- [x] Add theme change
-- [ ] Auto opcode/modules update
-- [ ] Mod installer
-- [ ] ez api for other electron modules
-- [ ] inv tab/minimap tab ?
-- [ ] give ur idea in [issues](https://github.com/Mathicha/tera-proxy-gui/issues) pls
-- [ ] other stuff
+- [x] On/Off Modules
+- [ ] idk
