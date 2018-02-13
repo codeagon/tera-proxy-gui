@@ -3,6 +3,8 @@ const fs = require('fs')
 const path = require('path')
 const hosts = require('./hosts')
 
+const update = false
+
 try { fs.readdirSync(path.join(__dirname, '..', '..', 'node_modules', 'tera-data', 'map')) }
 catch (e) { fs.mkdirSync(path.join(__dirname, '..', '..', 'node_modules', 'tera-data', 'map')) }
 
