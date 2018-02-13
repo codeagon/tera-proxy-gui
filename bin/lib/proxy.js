@@ -41,14 +41,16 @@ function Start(region, m) {
 		process.exit(1)
 	}
 
-	/* require('./update')(moduleBase, populateModulesList(), true).then((updateResult) => {
-		if (!updateResult['tera-data']) console.log('WARNING: There were errors updating tera-data. This might result in further errors.')
+	if (update) {
+		require('./update')(moduleBase, populateModulesList(), true).then((updateResult) => {
+			if (!updateResult['tera-data']) console.log('WARNING: There were errors updating tera-data. This might result in further errors.')
+			runSlsProxy()
+		}).catch((e) => {
+			console.log('ERROR: Unable to auto-update:', e)
+		})
+	} else {
 		runSlsProxy()
-	}).catch((e) => {
-		console.log('ERROR: Unable to auto-update:', e)
-	}) */
-
-	runSlsProxy()
+	}
 }
 
 const moduleBase = path.join(__dirname, '..', 'node_modules')
