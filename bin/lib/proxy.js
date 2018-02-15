@@ -60,8 +60,14 @@ let modules
 
 function populateModulesList() {
 	let M = fs.readdirSync(moduleBase)
-	for (var m = M.length - 1; m >= 0; m--)
+	for (var m = M.length - 1; m >= 0; m--) {
+		if (M[m].endsWith(('-master'))) {
+			let notmaster = M[m].replace(/-master/i, '')
+			fs.renameSync(`${moduleBase}/${M[m]}`, `${moduleBase}/${notmaster}`)
+			M[m] = notmaster
+		}
 		if (M[m][0] === '.' || M[m][0] === '_') M.splice(m, 1)
+	}
 	return M
 }
 
