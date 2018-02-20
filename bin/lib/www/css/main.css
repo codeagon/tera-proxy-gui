@@ -6,6 +6,10 @@
 	box-sizing: inherit
 }
 
+html {
+	overflow: hidden
+}
+
 html, body, .container {
 	font-family: roboto;
 	height: 100%
@@ -81,14 +85,17 @@ html, body, .container {
 #modules {
 	position: relative;
 	top: 64px;
-	height: auto;
+	height: calc(100% - 64px);
 	overflow: hidden;
 	overflow-y: auto
 }
 
 #modules>ul>li {
 	cursor: pointer;
-	padding: 1px 8px
+	padding: 1px 8px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
 }
 
 #modules>ul>li:first-child {
@@ -142,9 +149,9 @@ html, body, .container {
 	position: fixed;
 	top: 32px;
 	right: 32px;
-    width: 186px;
-    border-radius: 4px;
-    box-shadow: 0 0 1px 1px var(--AccentColor)
+	width: 186px;
+	border-radius: 4px;
+	box-shadow: 0 0 1px 1px var(--AccentColor)
 }
 
 #settings>div {
