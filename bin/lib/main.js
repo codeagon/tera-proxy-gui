@@ -4,12 +4,12 @@ const electron = require('electron')
 const { app, ipcMain, Menu, Tray } = require('electron')
 const proxy = require('./proxy')
 
-const debug = true
+const debug = false
 if (debug) console.log(`Running Electron ${process.versions.electron} (Node.js ${process.versions.node})` + '\r\n')
 global.debug = debug
 
 let config
-try { config = require('./config.json') }
+try { config = require('../config.json') }
 catch (e) { config = { 'region': 'EU' } }
 global.config = config
 
@@ -102,6 +102,9 @@ var contextMenu = Menu.buildFromTemplate([
 		}
 	}
 ])
+  process.on('uncaughtException', function (error) {
+    console.log(error);
+})
 
 function togglemodule(name) {
 	if (LoadedModules.includes(name)) {
